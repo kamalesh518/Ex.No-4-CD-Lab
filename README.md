@@ -1,7 +1,9 @@
 # Ex.No:4
 # RECOGNITION OF A VALID VARIABLE WHICH STARTS WITH A LETTER FOLLOWED BY ANY NUMBER OF LETTERS OR DIGITS USING YACC
-## Register Number:
-## Date:
+## Register Number:21222343001
+## Name : Kamalesh y
+## Date:24-04-2025
+
 ## Aim:
 To write a YACC program to recognize a valid variable which starts with a letter followed by any number of letters or digits.
 ## ALGORITHM
@@ -14,6 +16,61 @@ To write a YACC program to recognize a valid variable which starts with a letter
 7.	Compile these with the C compiler as gcc lex.yy.c y.tab.c
 8.	Enter a statement as input and the valid variables are identified as output.
 ## PROGRAM
+
+## EX4.l
+```
+%{
+#include "y.tab.h"
+%}
+
+%%
+
+"int" { return INT; } 
+"float" { return FLOAT; }
+"double" { return DOUBLE; }
+
+[a-zA-Z][a-zA-Z0-9]* {
+printf("\nIdentifier is %s", yytext); return ID;
+}
+
+. { return yytext[0]; }
+
+\n { return 0; }
+
+%%
+
+int yywrap() 
+{ 
+return 1;
+}
+```
+
+## EX4.y
+```
+%{
+#include <stdio.h>
+/* This YACC program is for recognizing the Expression */
+%}
+
+%token ID INT FLOAT DOUBLE
+%% D: T L;
+L: L ',' ID   | ID;
+
+T: INT | FLOAT | DOUBLE;
+
+%%
+extern FILE *yyin; int main() {
+do {
+yyparse();
+} while (!feof(yyin)); return 0;
+}
+
+void yyerror(char *s) { 
+}
+```
 ## Output
+
+![Screenshot 2025-04-23 130816](https://github.com/user-attachments/assets/3f0ed602-faf1-44e8-8ba4-3bd78bc581e5)
+
 ## Result
 A YACC program to recognize a valid variable which starts with a letter followed by any number of letters or digits is executed successfully and the output is verified.
